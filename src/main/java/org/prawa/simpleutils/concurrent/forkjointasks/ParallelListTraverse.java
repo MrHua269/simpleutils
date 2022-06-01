@@ -28,16 +28,16 @@ public class ParallelListTraverse<E> extends RecursiveAction {
         this.end = end;
     }
 
-    private ParallelListTraverse(int coreCount,List<E> list, Consumer<E> action, int start, int end) {
+    public ParallelListTraverse(List<E> list, int threads,Consumer<E> action) {
         this.action = action;
         this.list = list;
-        int taskPerThread = list.size() / coreCount;
+        int taskPerThread = list.size() / threads;
         if (taskPerThread < 2) {
             taskPerThread = 2;
         }
         this.threshold = taskPerThread;
-        this.start = start;
-        this.end = end;
+        this.start = 0;
+        this.end = list.size();
     }
 
     @Override
